@@ -61,7 +61,7 @@ CFLAGS = $(BASE_CFLAGS) $(ENV_CFLAGS)
 ifeq ($(CLANG_BUILD),1)
 	CXXFLAGS = $(BASE_CFLAGS) -std=gnu++0x -Wno-c++11-narrowing -Wno-dangling-else $(ENV_CXXFLAGS)
 else
-	CXXFLAGS = $(BASE_CFLAGS) -std=gnu++0x -fpermissive $(ENV_CXXFLAGS)
+	CXXFLAGS = $(BASE_CFLAGS) -std=gnu++0x -fpermissive -Wno-narrowing -fdiagnostics-color=always $(ENV_CXXFLAGS)
 endif
 DEFINES += -DVPROF_LEVEL=1 -DGNUC -DNO_HOOK_MALLOC -DNO_MALLOC_OVERRIDE
 
@@ -133,13 +133,13 @@ endif
 CCACHE := $(SRCROOT)/devtools/bin/linux/ccache
 
 ifeq ($(origin AR), default)
-	AR = $(STEAM_RUNTIME_PATH)/bin/ar crs
+	AR = ar crs
 endif
 ifeq ($(origin CC), default)
-	CC = $(CCACHE) $(STEAM_RUNTIME_PATH)/bin/gcc$(GCC_VER)	
+	CC = $(CCACHE) gcc$(GCC_VER)	
 endif
 ifeq ($(origin CXX), default)
-	CXX = $(CCACHE) $(STEAM_RUNTIME_PATH)/bin/g++$(GCC_VER)
+	CXX = $(CCACHE) g++$(GCC_VER)
 endif
 
 # Support ccache with clang. Add -Qunused-arguments to avoid excessive warnings due to

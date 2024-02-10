@@ -244,13 +244,23 @@ void CShaderDeviceMgr::CreateVkInstance()
 
 void CShaderDeviceMgr::CreateVkSurface()
 {
-    // MOM_TODO: Make this platform dependent
-    VkWin32SurfaceCreateInfoKHR createInfo = {VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR};
-    createInfo.hwnd = (HWND) m_hWnd;
-    // GetModuleHandle should be platform independent (defined in interface.h) on Linux/mac
-    createInfo.hinstance = GetModuleHandle(nullptr);
+#ifdef _WIN32
+	VkWin32SurfaceCreateInfoKHR createInfo = {VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR};
+
+	createInfo.hwnd = (HWND) m_hWnd;
+	createInfo.hinstance = GetModuleHandle(nullptr);
 
 	vkCheck(vkCreateWin32SurfaceKHR(m_hInstance, &createInfo, g_pAllocCallbacks, &m_hSurface));
+#elif defined( USE_SDL )
+	VkXlibSurfaceCreateInfoKHR createInfo = {VK_STRUCTURE_TYPE_XLIB_SURFACE_CREATE_INFO_KHR};
+
+	createInfo.window = 0;
+	createInfo.dpy = 0;
+
+	vkCheck(vkCreateXlibSurfaceKHR(m_hInstance, &createInfo, g_pAllocCallbacks, &m_hSurface));
+#else
+#error
+#endif
 }
 
 void CShaderDeviceMgr::CleanupVulkan()

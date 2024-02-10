@@ -3,6 +3,10 @@
 #include "shaderapi/ishaderapi.h"
 #include "materialsystem/idebugtextureinfo.h"
 
+#ifdef CurrentTime
+#undef CurrentTime
+#endif
+
 class CShaderAPI : public IShaderAPI, public IDebugTextureInfo
 {
 public:

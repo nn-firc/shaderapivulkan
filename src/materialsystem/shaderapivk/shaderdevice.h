@@ -78,8 +78,8 @@ public:
 
 	// NOTE: Deprecated!! Use CreateVertexBuffer/CreateIndexBuffer instead
 	// Creates/destroys Mesh
-	virtual IMesh* CreateStaticMesh(VertexFormat_t vertexFormat, const char *pTextureBudgetGroup, IMaterial * pMaterial = NULL) override {}
-	virtual void DestroyStaticMesh(IMesh* mesh) override {}
+	virtual IMesh* CreateStaticMesh(VertexFormat_t vertexFormat, const char *pTextureBudgetGroup, IMaterial * pMaterial = NULL) override;
+	virtual void DestroyStaticMesh(IMesh* mesh) override;
 
 	// Creates/destroys static vertex + index buffers
 	virtual IVertexBuffer *CreateVertexBuffer(ShaderBufferType_t type, VertexFormat_t fmt, int nVertexCount, const char *pBudgetGroup) override;
@@ -96,6 +96,10 @@ public:
 	virtual void EnableNonInteractiveMode(MaterialNonInteractiveMode_t mode, ShaderNonInteractiveInfo_t *pInfo = NULL) override;
 	virtual void RefreshFrontBufferNonInteractive() override;
 	virtual void HandleThreadEvent(uint32 threadEvent) override;
+
+#ifdef DX_TO_GL_ABSTRACTION
+	virtual void DoStartupShaderPreloading( void ) override {}
+#endif
 
 	virtual char *GetDisplayDeviceName() override;
 

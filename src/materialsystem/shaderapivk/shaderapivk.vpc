@@ -17,6 +17,7 @@ $Configuration
 	{
 		//$AdditionalIncludeDirectories	"$BASE;$SRCDIR\dx9sdk\include;..\"
 		$PreprocessorDefinitions		"$BASE;SHADERAPIVK;SHADER_DLL_EXPORT;PROTECTED_THINGS_ENABLE;strncpy=use_Q_strncpy_instead;_snprintf=use_Q_snprintf_instead"
+		$GCC_ExtraLinkerFlags                   "-lvulkan" [$LINUXALL]
 
 //		$AdditionalOptions		"/FC"
 	}
@@ -42,7 +43,7 @@ $Project "shaderapivk"
 {
 	$Folder	"Public Header Files"
 	{
-		$File	"$SRCDIR\public\shaderapi\ishaderdevice.h"
+		$File	"$SRCDIR\public\shaderapi\IShaderDevice.h"
 		$File	"$SRCDIR\public\shaderapi\ishaderutil.h"
 		$File	"$SRCDIR\public\shaderapi\ishaderapi.h"
 		$File	"$SRCDIR\public\shaderapi\ishaderdynamic.h"
@@ -61,7 +62,7 @@ $Project "shaderapivk"
  		}
 		$Folder "Device / Renderer"
 		{
-            		$File "shaderapivk_global.h"
+			$File "shaderapivk_global.h"
 			$File "shaderapivk.h"
 			$File "shaderapivk.cpp"
 			$File "shaderdevice.h"
@@ -91,6 +92,6 @@ $Project "shaderapivk"
 		$Lib "bitmap"
 		$Lib "mathlib"
 		$Lib "tier2"
-		$Lib "vulkan-1"
+		$Lib "vulkan-1" [$WIN32]
 	}
 }

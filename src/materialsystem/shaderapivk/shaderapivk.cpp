@@ -4,6 +4,10 @@
 #include "shaderapi/ishaderutil.h"
 #include "shaderdevice.h"
 
+#ifdef CurrentTime
+#undef CurrentTime
+#endif
+
 static CShaderAPI g_ShaderAPIVk;
 CShaderAPI *g_pShaderAPI = &g_ShaderAPIVk;
 EXPOSE_SINGLE_INTERFACE_GLOBALVAR(CShaderAPI, IShaderAPI, SHADERAPI_INTERFACE_VERSION, g_ShaderAPIVk);
@@ -301,6 +305,8 @@ void CShaderAPI::GetLightmapDimensions(int* w, int* h)
 
 MaterialFogMode_t CShaderAPI::GetSceneFogMode()
 {
+	static MaterialFogMode_t dummy;
+	return dummy;
 }
 
 void CShaderAPI::MatrixMode(MaterialMatrixMode_t matrixMode)
@@ -417,14 +423,17 @@ void CShaderAPI::GetWorldSpaceCameraPosition(float* pPos) const
 
 int CShaderAPI::GetCurrentNumBones() const
 {
+	return 0;
 }
 
 int CShaderAPI::GetCurrentLightCombo() const
 {
+	return 0;
 }
 
 MaterialFogMode_t CShaderAPI::GetCurrentFogType() const
 {
+	return MATERIAL_FOG_NONE;
 }
 
 void CShaderAPI::SetTextureTransformDimension(TextureStage_t textureStage, int dimension, bool projected)
@@ -453,10 +462,13 @@ void CShaderAPI::GetBackBufferDimensions(int& width, int& height) const
 
 int CShaderAPI::GetMaxLights() const
 {
+	return 0;
 }
 
 const LightDesc_t& CShaderAPI::GetLight(int lightNum) const
 {
+	static LightDesc_t dummy;
+	return dummy;
 }
 
 void CShaderAPI::SetPixelShaderFogParams(int reg)
@@ -477,6 +489,7 @@ void CShaderAPI::CommitPixelShaderLighting(int pshReg)
 
 CMeshBuilder* CShaderAPI::GetVertexModifyBuilder()
 {
+	return nullptr;
 }
 
 bool CShaderAPI::InFlashlightMode() const
@@ -486,6 +499,8 @@ bool CShaderAPI::InFlashlightMode() const
 
 const FlashlightState_t& CShaderAPI::GetFlashlightState(VMatrix& worldToTexture) const
 {
+	static FlashlightState_t blah;
+	return blah;
 }
 
 bool CShaderAPI::InEditorMode() const
@@ -513,10 +528,13 @@ void CShaderAPI::SetToneMappingScaleLinear(const Vector& scale)
 
 const Vector& CShaderAPI::GetToneMappingScaleLinear() const
 {
+	static Vector dummy;
+	return dummy;
 }
 
 float CShaderAPI::GetLightMapScaleFactor() const
 {
+	return 0.f;
 }
 
 void CShaderAPI::LoadBoneMatrix(int boneIndex, const float* m)
@@ -535,10 +553,13 @@ void CShaderAPI::GetDXLevelDefaults(uint& max_dxlevel, uint& recommended_dxlevel
 const FlashlightState_t& CShaderAPI::GetFlashlightStateEx(VMatrix& worldToTexture,
     ITexture** pFlashlightDepthTexture) const
 {
+	static FlashlightState_t blah;
+	return blah;
 }
 
 float CShaderAPI::GetAmbientLightCubeLuminance()
 {
+	return 0.f;
 }
 
 void CShaderAPI::GetDX9LightState(LightState_t* state) const
@@ -547,6 +568,7 @@ void CShaderAPI::GetDX9LightState(LightState_t* state) const
 
 int CShaderAPI::GetPixelFogCombo()
 {
+	return 0;
 }
 
 void CShaderAPI::BindStandardVertexTexture(VertexTextureSampler_t sampler, StandardTextureId_t id)
@@ -555,6 +577,7 @@ void CShaderAPI::BindStandardVertexTexture(VertexTextureSampler_t sampler, Stand
 
 bool CShaderAPI::IsHWMorphingEnabled() const
 {
+	return false;
 }
 
 void CShaderAPI::GetStandardTextureDimensions(int* pWidth, int* pHeight, StandardTextureId_t id)
@@ -579,6 +602,7 @@ void CShaderAPI::SetIntegerPixelShaderConstant(int var, int const* pVec, int num
 
 bool CShaderAPI::ShouldWriteDepthToDestAlpha() const
 {
+	return false;
 }
 
 void CShaderAPI::PushDeformation(DeformationBase_t const* Deformation)
@@ -591,11 +615,14 @@ void CShaderAPI::PopDeformation()
 
 int CShaderAPI::GetNumActiveDeformations() const
 {
+	return 0;
 }
 
 int CShaderAPI::GetPackedDeformationInformation(int nMaskOfUnderstoodDeformations, float* pConstantValuesOut,
     int nBufferSize, int nMaximumDeformations, int* pNumDefsOut) const
 {
+	*pNumDefsOut = 0;
+	return 0;
 }
 
 void CShaderAPI::MarkUnusedVertexFields(unsigned nFlags, int nTexCoordCount, bool* pUnusedTexCoords)
@@ -634,6 +661,7 @@ KeyValues* CShaderAPI::GetDebugTextureList()
 
 int CShaderAPI::GetTextureMemoryUsed(TextureMemoryType eTextureMemory)
 {
+	return 0;
 }
 
 bool CShaderAPI::IsDebugTextureListFresh(int numFramesAllowed /* = 1 */)

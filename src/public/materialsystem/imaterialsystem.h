@@ -1045,7 +1045,7 @@ public:
 	virtual IMaterial *			FindMaterialEx( char const* pMaterialName, const char *pTextureGroupName, int nContext, bool complain = true, const char *pComplainPrefix = NULL ) = 0;
 
 #ifdef DX_TO_GL_ABSTRACTION
-	virtual void				DoStartupShaderPreloading( void ) = 0;
+	virtual void				DoStartupShaderPreloading( void ) {}
 #endif	
 
 	// Sets the override sizes for all render target size tests. These replace the frame buffer size.

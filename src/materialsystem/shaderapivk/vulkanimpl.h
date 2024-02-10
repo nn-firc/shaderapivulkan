@@ -1,7 +1,10 @@
 #pragma once
 
-// MOM_VK_TODO: Make this the correct platform define
+#ifdef _WIN32
 #define VK_USE_PLATFORM_WIN32_KHR
+#elif defined( LINUX )
+#define VK_USE_PLATFORM_XLIB_KHR
+#endif
 #include <vulkan/vulkan.hpp>
 
 extern VkAllocationCallbacks* g_pAllocCallbacks;
@@ -11,7 +14,7 @@ extern uint32_t GetValidationLayerCount();
 
 void InitValidationLayers();
 
-void vkCheck(VkResult result)
+static void vkCheck(VkResult result)
 {
 	if (result != VK_SUCCESS)
 		*(int*)0 = 0;
@@ -19,7 +22,7 @@ void vkCheck(VkResult result)
 
 #include "bitmap/imageformat.h"
 
-ImageFormat vkfmt2imgfmt(VkFormat format)
+static ImageFormat vkfmt2imgfmt(VkFormat format)
 {
 	static ImageFormat conversions[] =
 	{
@@ -61,7 +64,7 @@ ImageFormat vkfmt2imgfmt(VkFormat format)
 	return conversions[(size_t)format];
 }
 
-VkFormat imgfmt2vkfmt(ImageFormat format)
+static VkFormat imgfmt2vkfmt(ImageFormat format)
 {
 	static VkFormat conversions[] =
 	{
